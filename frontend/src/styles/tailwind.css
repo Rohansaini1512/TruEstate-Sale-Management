@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply text-gray-900;
+  }
+
+  h1 {
+    @apply text-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-2xl font-bold;
+  }
+
+  h3 {
+    @apply text-xl font-bold;
+  }
+
+  button {
+    @apply transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .stat-card {
+    @apply bg-white rounded-lg shadow-sm p-4 flex flex-col;
+  }
+
+  .stat-label {
+    @apply text-sm font-medium text-gray-600 mb-2;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold text-primary-700;
+  }
+
+  .filter-btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+
+  .filter-btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700;
+  }
+
+  .filter-btn-secondary {
+    @apply bg-gray-200 text-gray-800 hover:bg-gray-300;
+  }
+
+  .badge {
+    @apply inline-block px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-success {
+    @apply bg-success bg-opacity-20 text-success;
+  }
+
+  .badge-error {
+    @apply bg-error bg-opacity-20 text-error;
+  }
+
+  .badge-warning {
+    @apply bg-warning bg-opacity-20 text-warning;
+  }
+
+  .badge-primary {
+    @apply bg-primary-100 text-primary-700;
+  }
+}
