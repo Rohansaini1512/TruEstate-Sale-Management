@@ -8,6 +8,7 @@ interface SalesTableProps {
   error: string | null;
   onPageChange: (page: number) => void;
   onSortChange?: (sortBy: string, sortOrder: 'asc' | 'desc') => void;
+  onCustomerNameSort?: (sortOrder: 'asc' | 'desc') => void;
   currentSort?: { by: string; order: 'asc' | 'desc' };
 }
 
@@ -19,9 +20,18 @@ const SalesTable: React.FC<SalesTableProps> = ({
   onSortChange,
   currentSort,
 }) => {
+
+  // Dedicated handler for customer name sorting
+  const handleCustomerNameHeaderClick = () => {
+    if (!onCustomerNameSort) return;
+    const newOrder = currentSort?.by === 'customerName' && currentSort?.order === 'asc' ? 'desc' : 'asc';
+    onCustomerNameSort(newOrder);
+  };
+
+  // Generic handler for other sortable fields
   const handleHeaderClick = (field: string) => {
     if (!onSortChange) return;
-    
+    if (field === 'customerName') return; // Prevent generic handler from handling customerName
     const newOrder = currentSort?.by === field && currentSort?.order === 'asc' ? 'desc' : 'asc';
     onSortChange(field, newOrder);
   };
@@ -68,7 +78,7 @@ const SalesTable: React.FC<SalesTableProps> = ({
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Transaction ID</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600 cursor-pointer hover:bg-primary-700" onClick={() => handleHeaderClick('date')}>Date {getSortIcon('date')}</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Customer ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600 cursor-pointer hover:bg-primary-700" onClick={() => handleHeaderClick('customerName')}>Customer name {getSortIcon('customerName')}</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600 cursor-pointer hover:bg-primary-700" onClick={handleCustomerNameHeaderClick}>Customer name {getSortIcon('customerName')}</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Phone Number</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Gender</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Age</th>
