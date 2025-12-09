@@ -7,6 +7,8 @@ interface SalesTableProps {
   loading: boolean;
   error: string | null;
   onPageChange: (page: number) => void;
+  onSortChange?: (sortBy: string, sortOrder: 'asc' | 'desc') => void;
+  currentSort?: { by: string; order: 'asc' | 'desc' };
 }
 
 const SalesTable: React.FC<SalesTableProps> = ({
@@ -14,7 +16,22 @@ const SalesTable: React.FC<SalesTableProps> = ({
   loading,
   error,
   onPageChange,
+  onSortChange,
+  currentSort,
 }) => {
+  const handleHeaderClick = (field: string) => {
+    if (!onSortChange) return;
+    
+    const newOrder = currentSort?.by === field && currentSort?.order === 'asc' ? 'desc' : 'asc';
+    onSortChange(field, newOrder);
+  };
+
+  const getSortIcon = (field: string) => {
+    if (!currentSort || currentSort.by !== field) {
+      return <span className="ml-1 text-gray-300">⇅</span>;
+    }
+    return <span className="ml-1">{currentSort.order === 'asc' ? '↑' : '↓'}</span>;
+  };
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -49,15 +66,15 @@ const SalesTable: React.FC<SalesTableProps> = ({
           <thead className="bg-primary-600 text-white">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Transaction ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Date</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600 cursor-pointer hover:bg-primary-700" onClick={() => handleHeaderClick('date')}>Date {getSortIcon('date')}</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Customer ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Customer name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600 cursor-pointer hover:bg-primary-700" onClick={() => handleHeaderClick('customerName')}>Customer name {getSortIcon('customerName')}</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Phone Number</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Gender</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Age</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Product Category</th>
-              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Quantity</th>
-              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Total Amount</th>
+              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600 cursor-pointer hover:bg-primary-700" onClick={() => handleHeaderClick('quantity')}>Quantity {getSortIcon('quantity')}</th>
+              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600 cursor-pointer hover:bg-primary-700" onClick={() => handleHeaderClick('totalAmount')}>Total Amount {getSortIcon('totalAmount')}</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Customer region</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Product ID</th>
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Employee name</th>
@@ -66,7 +83,7 @@ const SalesTable: React.FC<SalesTableProps> = ({
           <tbody className="bg-white divide-y divide-gray-200">
             {data.items.map((record: Sale, index: number) => (
               <tr
-                key={record.productId ?? index}
+                key={(record.transactionId || record.productId || index) as string | number}
                 className={index % 2 === 0 ? 'bg-white hover:bg-gray-50' : 'bg-gray-50 hover:bg-gray-100'}
               >
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">

@@ -61,10 +61,10 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md mb-6 overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 flex justify-between items-center">
-        <h2 className="text-xl font-bold text-white flex items-center">
-          <svg className="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <h2 className="text-lg font-bold text-white flex items-center">
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
           </svg>
           Filters
@@ -74,7 +74,7 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
           className="text-white hover:text-primary-100 transition-colors duration-200"
         >
           <svg
-            className={`w-6 h-6 transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+            className={`w-5 h-5 transform transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -85,29 +85,28 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
       </div>
 
       {isExpanded && (
-        <div className="p-6">
-          <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Search
-            </label>
+        <div className="p-4">
+          {/* Search Bar - Full width */}
+          <div className="mb-4 flex-1">
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by product, customer, phone, customer ID, or employee..."
+              placeholder="Search by product, customer, phone, ID, or employee..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+          {/* Filters Row - Horizontal Layout */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-3 mb-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Customer Region</label>
               <select
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-2 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                title="Customer Region"
               >
-                <option value="">All Regions</option>
+                <option value="">Region</option>
                 {(filterOptions?.customerRegions || defaultRegions).map((reg) => (
                   <option key={reg} value={reg}>{reg}</option>
                 ))}
@@ -115,13 +114,13 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
               <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-2 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                title="Gender"
               >
-                <option value="">All</option>
+                <option value="">Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
@@ -129,13 +128,13 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Age Range</label>
               <select
                 value={ageRange}
                 onChange={(e) => setAgeRange(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-2 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                title="Age Range"
               >
-                <option value="">All</option>
+                <option value="">Age Range</option>
                 <option value="18-25">18–25</option>
                 <option value="26-35">26–35</option>
                 <option value="36-50">36–50</option>
@@ -144,13 +143,13 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Product Category</label>
               <select
                 value={productCategory}
                 onChange={(e) => setProductCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-2 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                title="Product Category"
               >
-                <option value="">All Categories</option>
+                <option value="">Category</option>
                 {(filterOptions?.productCategories || defaultCategories).map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
@@ -158,13 +157,13 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
               <select
                 value={paymentMethod}
                 onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-2 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                title="Payment Method"
               >
-                <option value="">All</option>
+                <option value="">Payment</option>
                 {(filterOptions?.paymentMethods || defaultPaymentMethods).map((pm) => (
                   <option key={pm} value={pm}>{pm}</option>
                 ))}
@@ -172,31 +171,42 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOpti
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Date From</label>
-              <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200" />
+              <input
+                type="date"
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                className="w-full px-2 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                title="Date From"
+              />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Date To</label>
-              <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200" />
+              <input
+                type="date"
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                className="w-full px-2 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                title="Date To"
+              />
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+          {/* Action Buttons */}
+          <div className="flex gap-2 pt-2">
             <button
               onClick={handleApplyFilters}
-              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center"
+              className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded text-sm transition-colors duration-200 flex items-center justify-center"
             >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              Apply Filters
+              Apply
             </button>
             <button
               onClick={handleReset}
-              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center"
+              className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded text-sm transition-colors duration-200 flex items-center justify-center"
             >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
               Reset

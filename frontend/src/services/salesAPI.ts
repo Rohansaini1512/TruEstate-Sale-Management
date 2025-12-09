@@ -3,6 +3,7 @@ import axios from 'axios';
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 export interface Sale {
+  transactionId?: string;
   customerId: string;
   customerName: string;
   phoneNumber: string;

@@ -1,6 +1,7 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import SalesFilters from './components/SalesFilters';
 import SalesTable from './components/SalesTable';
+import StatsHeader from './components/StatsHeader';
 import { useSalesData, useFilterOptions } from './hooks/useSalesData';
 import { SalesQueryParams } from './services/salesAPI';
 import './styles/tailwind.css';
@@ -37,6 +38,18 @@ function App() {
     [currentParams, data, fetchData]
   );
 
+  const handleSortChange = useCallback(
+    (sortBy: string, sortOrder: 'asc' | 'desc') => {
+      const validSortFields = ['date', 'customerName', 'quantity', 'totalAmount'];
+      if (validSortFields.includes(sortBy)) {
+        const newParams = { ...currentParams, page: 1, sortBy: sortBy as any, sortOrder };
+        setCurrentParams(newParams);
+        fetchData(newParams);
+      }
+    },
+    [currentParams, fetchData]
+  );
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Header */}
@@ -61,27 +74,31 @@ function App() {
 
       {/* Main Content */}
       <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Filters Sidebar */}
-          <aside className="lg:col-span-1">
-            <div className="sticky top-24">
-              <SalesFilters
-                onFiltersChange={handleFiltersChange}
-                filterOptions={filterOptions}
-              />
-            </div>
-          </aside>
-
-          {/* Table Content */}
-          <section className="lg:col-span-3">
-            <SalesTable
-              data={data}
-              loading={loading}
-              error={error}
-              onPageChange={handlePageChange}
-            />
-          </section>
+        {/* Filters Navbar */}
+        <div className="mb-8">
+          <SalesFilters
+            onFiltersChange={handleFiltersChange}
+            filterOptions={filterOptions}
+          />
         </div>
+
+        {/* Stats Header */}
+        <StatsHeader data={data} />
+
+        {/* Table Content Full Width */}
+        <section>
+          <SalesTable
+            data={data}
+            loading={loading}
+            error={error}
+            onPageChange={handlePageChange}
+            onSortChange={handleSortChange}
+            currentSort={{
+              by: currentParams.sortBy || 'date',
+              order: currentParams.sortOrder || 'desc',
+            }}
+          />
+        </section>
       </main>
 
       {/* Footer */}
