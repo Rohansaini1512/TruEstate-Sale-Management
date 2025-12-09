@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { querySalesRecords, getFilterOptions } from '../services/queryService';
+import { salesService } from '../services/salesService';
 import { QueryFilters, QueryOptions } from '../types';
 
 /**
@@ -100,11 +100,11 @@ function parseQueryParams(query: any): { filters: QueryFilters; options: QueryOp
  * GET /api/sales
  * Retrieve sales records with filtering, sorting, and pagination
  */
-export function getSalesRecords(req: Request, res: Response): void {
+export async function getSalesRecords(req: Request, res: Response): Promise<void> {
   try {
     const { filters, options } = parseQueryParams(req.query);
 
-    const result = querySalesRecords(filters, options);
+    const result = await salesService.getAllSales({ ...filters, ...options });
 
     res.json({
       success: true,
@@ -125,9 +125,9 @@ export function getSalesRecords(req: Request, res: Response): void {
  * GET /api/sales/filters
  * Get available filter options
  */
-export function getFilterOptionsHandler(req: Request, res: Response): void {
+export async function getFilterOptionsHandler(req: Request, res: Response): Promise<void> {
   try {
-    const options = getFilterOptions();
+    const options = await salesService.getFilterOptions();
     res.json({
       success: true,
       data: options,

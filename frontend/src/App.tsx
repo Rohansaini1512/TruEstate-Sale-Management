@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import { SalesFilters } from './components/SalesFilters';
-import { SalesTable } from './components/SalesTable';
+import SalesFilters from './components/SalesFilters';
+import SalesTable from './components/SalesTable';
 import { useSalesData, useFilterOptions } from './hooks/useSalesData';
 import { SalesQueryParams } from './services/salesAPI';
 import './styles/tailwind.css';
