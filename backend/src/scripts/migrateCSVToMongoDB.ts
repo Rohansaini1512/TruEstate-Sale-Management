@@ -87,17 +87,17 @@ function mapCSVRowToSalesRecord(row: CSVRow): any {
 
   return {
     // Transaction/Customer Information
-    transactionId: row['Transaction ID'] || row.transactionId || row.transaction_id || `TXN${Date.now()}`,
+    transactionId: row['Transaction ID'] || row.transactionId || row.transaction_id || row['Txn ID'] || row.txn_id || row.TxnID || `TXN${Date.now()}`,
     customerId: row['Customer ID'] || row.customerId || row.customer_id || row.CustomerID || `CUST${Date.now()}`,
     customerName: row['Customer Name'] || row.customerName || row.customer_name || row.CustomerName || 'Unknown',
-    phoneNumber: row['Phone Number'] || row.phoneNumber || row.phone_number || row.Phone || '',
+    phoneNumber: row['Phone Number'] || row.phoneNumber || row.phone_number || row.Phone || row['Phone No'] || row['Phone No.'] || row.mobile || row['Mobile Number'] || '',
     gender: mapGender(row.Gender || row.gender),
     age: Math.max(0, Math.min(150, parseInt(row.Age || row.age) || 0)),
     customerRegion: row['Customer Region'] || row.customerRegion || row.customer_region || row.Region || 'Unknown',
     customerType: mapCustomerType(row['Customer Type'] || row.customerType || row.customer_type || row.Type),
 
     // Product Information
-    productId: row['Product ID'] || row.productId || row.product_id || row.ProductID || `PROD${Date.now()}`,
+  productId: row['Product ID'] || row.productId || row.product_id || row.ProductID || row.SKU || `PROD${Date.now()}`,
     productName: row['Product Name'] || row.productName || row.product_name || row.ProductName || 'Unknown Product',
     brand: row.Brand || row.brand || 'Unknown',
     productCategory: row['Product Category'] || row.productCategory || row.product_category || row.Category || 'General',
@@ -117,8 +117,8 @@ function mapCSVRowToSalesRecord(row: CSVRow): any {
     deliveryType: mapDeliveryType(row['Delivery Type'] || row.deliveryType || row.delivery_type || row.DeliveryType),
     storeId: row['Store ID'] || row.storeId || row.store_id || row.StoreID || 'STORE001',
     storeLocation: row['Store Location'] || row.storeLocation || row.store_location || row.Location || 'Unknown',
-    salespersonId: row['Salesperson ID'] || row.salespersonId || row.salesperson_id || row.SalespersonID || 'EMP001',
-    employeeName: row['Employee Name'] || row.employeeName || row.employee_name || row.EmployeeName || 'Unknown',
+    salespersonId: row['Salesperson ID'] || row.salespersonId || row.salesperson_id || row.SalespersonID || row.Salesperson || 'EMP001',
+    employeeName: row['Employee Name'] || row.employeeName || row.employee_name || row.EmployeeName || row.Salesperson || row.SalespersonName || 'Unknown',
   };
 }
 
@@ -216,7 +216,22 @@ async function migrateCSVToMongoDB() {
 
     // Read CSV file
     console.log('📖 Parsing CSV data...');
-    const salesData = await readCSVFile(absolutePath);
+    let salesData = await readCSVFile(absolutePath);
+
+    // --test flag: insert only a small sample for verification
+    const testFlagIndex = process.argv.findIndex(arg => arg === '--test' || arg.startsWith('--test='));
+    if (testFlagIndex !== -1) {
+      // allow --test or --test=10
+      let testCount = 10;
+      const flag = process.argv[testFlagIndex];
+      if (flag && flag.includes('=')) {
+        const parts = flag.split('=');
+        const val = parseInt(parts[1], 10);
+        if (!isNaN(val) && val > 0) testCount = val;
+      }
+      console.log(`⚙️  Test mode: limiting insert to first ${testCount} records`);
+      salesData = salesData.slice(0, testCount);
+    }
     
     if (salesData.length === 0) {
       console.log('⚠️  No records found in CSV file\n');

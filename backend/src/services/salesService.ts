@@ -54,6 +54,8 @@ export class SalesService {
         { productName: { $regex: search, $options: 'i' } },
         { customerId: { $regex: search, $options: 'i' } },
         { productId: { $regex: search, $options: 'i' } },
+        { phoneNumber: { $regex: search, $options: 'i' } },
+        { employeeName: { $regex: search, $options: 'i' } },
       ];
     }
 

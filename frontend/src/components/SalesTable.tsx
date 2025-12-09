@@ -1,8 +1,9 @@
 import React from 'react';
-import { SalesRecord, PaginatedResponse } from '../services/salesAPI';
+import { Sale } from '../hooks/useSalesData';
+import { PaginatedResponse } from '../services/salesAPI';
 
 interface SalesTableProps {
-  data: PaginatedResponse | null;
+  data: PaginatedResponse<Sale> | null;
   loading: boolean;
   error: string | null;
   onPageChange: (page: number) => void;
@@ -47,75 +48,65 @@ const SalesTable: React.FC<SalesTableProps> = ({
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-primary-600 text-white">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Product ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Product</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Category</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Region</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Store</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Delivery</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Customer</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Type</th>
-              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Quantity</th>
-              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Discount</th>
-              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Savings</th>
-              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Final Amount</th>
-              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Transaction ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Date</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Customer ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Customer name</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Phone Number</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Gender</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Age</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Product Category</th>
+              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Quantity</th>
+              <th className="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Total Amount</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Customer region</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Product ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider sticky top-0 z-20 bg-primary-600">Employee name</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {data.items.map((record: SalesRecord, index: number) => (
+            {data.items.map((record: Sale, index: number) => (
               <tr
-                key={record.productId + index}
+                key={record.productId ?? index}
                 className={index % 2 === 0 ? 'bg-white hover:bg-gray-50' : 'bg-gray-50 hover:bg-gray-100'}
               >
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                  {record.productId}
-                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                  {record.productName}
+                  {record.productId ?? '—'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {record.productCategory}
+                  {record.date ? new Date(record.date).toLocaleString() : '—'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {record.customerRegion}
+                  {record.customerId ?? '—'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {record.storeLocation}
+                  {record.customerName ?? '—'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {record.deliveryType}
+                  {record.phoneNumber ?? '—'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {record.customerName}
+                  {record.gender ?? '—'}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                    record.customerType === 'Regular' 
-                      ? 'bg-success-100 text-success-800' 
-                      : record.customerType === 'Premium'
-                      ? 'bg-primary-100 text-primary-800'
-                      : 'bg-warning-100 text-warning-800'
-                  }`}>
-                    {record.customerType}
-                  </span>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {typeof record.age === 'number' ? record.age : record.age ? Number(record.age) : '—'}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {record.productCategory ?? '—'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-700">
-                  {record.quantity}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-700">
-                  {record.discountPercentage.toFixed(0)}%
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-right">
-                  <span className={(record.finalAmount - record.totalAmount) >= 0 ? 'text-success-600 font-semibold' : 'text-error-600 font-semibold'}>
-                    ${(record.finalAmount - record.totalAmount).toFixed(2)}
-                  </span>
+                  {record.quantity ?? 0}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900">
-                  ${record.finalAmount.toFixed(2)}
+                  ${typeof record.totalAmount === 'number' ? record.totalAmount.toFixed(2) : (record.totalAmount ? Number(record.totalAmount).toFixed(2) : '0.00')}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                  {new Date(record.date).toLocaleDateString()}
+                  {record.customerRegion ?? '—'}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                  {record.productId ?? '—'}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                  {record.employeeName ?? '—'}
                 </td>
               </tr>
             ))}

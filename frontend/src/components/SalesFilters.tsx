@@ -1,48 +1,62 @@
 import React, { useState } from 'react';
+import { SalesQueryParams, FilterOptions } from '../services/salesAPI';
 
 interface SalesFiltersProps {
-  onFiltersChange: (filters: any) => void;
-  filterOptions?: any;
+  onFiltersChange: (filters: SalesQueryParams) => void;
+  filterOptions?: FilterOptions | null;
 }
 
-const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange }) => {
+const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange, filterOptions }) => {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [category, setCategory] = useState<string>('');
-  const [region, setRegion] = useState<string>('');
-  const [state, setState] = useState<string>('');
-  const [segment, setSegment] = useState<string>('');
-  const [shipMode, setShipMode] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
-  const [minSales, setMinSales] = useState<string>('');
-  const [maxSales, setMaxSales] = useState<string>('');
+  const [region, setRegion] = useState<string>('');
+  const [gender, setGender] = useState<string>('');
+  const [ageRange, setAgeRange] = useState<string>('');
+  const [productCategory, setProductCategory] = useState<string>('');
+  const [paymentMethod, setPaymentMethod] = useState<string>('');
+  const [dateFrom, setDateFrom] = useState<string>('');
+  const [dateTo, setDateTo] = useState<string>('');
 
-  const categories = ['Furniture', 'Technology', 'Office Supplies'];
-  const regions = ['East', 'West', 'Central', 'South'];
-  const segments = ['Consumer', 'Corporate', 'Home Office'];
-  const shipModes = ['Standard Class', 'Second Class', 'First Class', 'Same Day'];
+  // default options if backend didn't provide them
+  const defaultRegions = ['North', 'South', 'East', 'West', 'Central'];
+  const defaultCategories = ['Clothing', 'Electronics', 'Grocery', 'Home', 'Other'];
+  const defaultPaymentMethods = ['Credit Card', 'Debit Card', 'Cash', 'PayPal', 'Bank Transfer'];
 
   const handleApplyFilters = () => {
-    const filters: any = {};
-    if (category) filters.category = category;
-    if (region) filters.region = region;
-    if (state) filters.state = state;
-    if (segment) filters.segment = segment;
-    if (shipMode) filters.ship_mode = shipMode;
-    if (searchQuery) filters.search = searchQuery;
-    if (minSales) filters.min_sales = parseFloat(minSales);
-    if (maxSales) filters.max_sales = parseFloat(maxSales);
+    const filters: SalesQueryParams = {};
+    if (searchQuery) filters.search = searchQuery.trim();
+    if (region) filters.customerRegions = [region];
+    if (gender && gender !== 'All') filters.gender = gender;
+    if (productCategory) filters.productCategories = [productCategory];
+    if (paymentMethod) filters.paymentMethods = [paymentMethod];
+    if (dateFrom) filters.dateFrom = dateFrom;
+    if (dateTo) filters.dateTo = dateTo;
+
+    // Age range mapping
+    if (ageRange) {
+      const parts = ageRange.split('-');
+      if (parts.length === 2) {
+        const min = parseInt(parts[0], 10);
+        const max = parseInt(parts[1], 10);
+        if (!isNaN(min)) filters.ageMin = min;
+        if (!isNaN(max)) filters.ageMax = max;
+      } else if (ageRange === '50+') {
+        filters.ageMin = 50;
+      }
+    }
+
     onFiltersChange(filters);
   };
 
   const handleReset = () => {
-    setCategory('');
-    setRegion('');
-    setState('');
-    setSegment('');
-    setShipMode('');
     setSearchQuery('');
-    setMinSales('');
-    setMaxSales('');
+    setRegion('');
+    setGender('');
+    setAgeRange('');
+    setProductCategory('');
+    setPaymentMethod('');
+    setDateFrom('');
+    setDateTo('');
     onFiltersChange({});
   };
 
@@ -80,117 +94,91 @@ const SalesFilters: React.FC<SalesFiltersProps> = ({ onFiltersChange }) => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by product, customer, order ID..."
+              placeholder="Search by product, customer, phone, customer ID, or employee..."
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
             />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Category
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
-              >
-                <option value="">All Categories</option>
-                {categories.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Region
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Customer Region</label>
               <select
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
               >
                 <option value="">All Regions</option>
-                {regions.map((reg) => (
-                  <option key={reg} value={reg}>
-                    {reg}
-                  </option>
+                {(filterOptions?.customerRegions || defaultRegions).map((reg) => (
+                  <option key={reg} value={reg}>{reg}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                State
-              </label>
-              <input
-                type="text"
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                placeholder="Enter state..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Segment
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
               <select
-                value={segment}
-                onChange={(e) => setSegment(e.target.value)}
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
               >
-                <option value="">All Segments</option>
-                {segments.map((seg) => (
-                  <option key={seg} value={seg}>
-                    {seg}
-                  </option>
-                ))}
+                <option value="">All</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Ship Mode
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Age Range</label>
               <select
-                value={shipMode}
-                onChange={(e) => setShipMode(e.target.value)}
+                value={ageRange}
+                onChange={(e) => setAgeRange(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
               >
-                <option value="">All Ship Modes</option>
-                {shipModes.map((mode) => (
-                  <option key={mode} value={mode}>
-                    {mode}
-                  </option>
+                <option value="">All</option>
+                <option value="18-25">18–25</option>
+                <option value="26-35">26–35</option>
+                <option value="36-50">36–50</option>
+                <option value="50+">50+</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Product Category</label>
+              <select
+                value={productCategory}
+                onChange={(e) => setProductCategory(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
+              >
+                <option value="">All Categories</option>
+                {(filterOptions?.productCategories || defaultCategories).map((cat) => (
+                  <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Sales Range
-              </label>
-              <div className="flex space-x-2">
-                <input
-                  type="number"
-                  value={minSales}
-                  onChange={(e) => setMinSales(e.target.value)}
-                  placeholder="Min"
-                  className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
-                />
-                <input
-                  type="number"
-                  value={maxSales}
-                  onChange={(e) => setMaxSales(e.target.value)}
-                  placeholder="Max"
-                  className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
-                />
-              </div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Payment Method</label>
+              <select
+                value={paymentMethod}
+                onChange={(e) => setPaymentMethod(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200"
+              >
+                <option value="">All</option>
+                {(filterOptions?.paymentMethods || defaultPaymentMethods).map((pm) => (
+                  <option key={pm} value={pm}>{pm}</option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Date From</label>
+              <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200" />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Date To</label>
+              <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-shadow duration-200" />
             </div>
           </div>
 

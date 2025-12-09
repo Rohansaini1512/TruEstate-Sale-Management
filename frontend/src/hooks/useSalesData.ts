@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
-import { SalesRecord, PaginatedResponse, FilterOptions } from '../services/salesAPI';
-import salesAPI, { SalesQueryParams } from '../services/salesAPI';
+import salesAPI, { SalesQueryParams, PaginatedResponse, FilterOptions, Sale } from '../services/salesAPI';
+
+// Re-export the Sale type from the API module so other components can import
+// `Sale` from this hook file as requested.
+export type { Sale } from '../services/salesAPI';
 
 export function useSalesData(initialParams?: SalesQueryParams) {
-  const [data, setData] = useState<PaginatedResponse<SalesRecord> | null>(null);
+  const [data, setData] = useState<PaginatedResponse<Sale> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,12 +24,14 @@ export function useSalesData(initialParams?: SalesQueryParams) {
   };
 
   useEffect(() => {
+    // Re-run when initialParams changes. If none provided, fetch first page.
     if (initialParams) {
       fetchData(initialParams);
     } else {
       fetchData({ page: 1, limit: 10 });
     }
-  }, []);
+    // include initialParams so ESLint/react-hooks rule is satisfied
+  }, [initialParams]);
 
   return { data, loading, error, fetchData };
 }
