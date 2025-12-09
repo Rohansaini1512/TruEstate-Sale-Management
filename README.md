@@ -1,89 +1,124 @@
-# 🛒 Retail Sales Management System
+# 🛒 TruEstate - Retail Sales Management System
 
-A full-stack web application for managing and analyzing retail sales data with advanced filtering, searching, and analytics capabilities.
+> A full-stack web application for managing and analyzing retail sales data with advanced filtering, searching, sorting, and real-time analytics.
+
+![Status](https://img.shields.io/badge/status-active-success.svg)
+![Node Version](https://img.shields.io/badge/node-%3E%3D14-brightgreen.svg)
+![React Version](https://img.shields.io/badge/react-18-blue.svg)
+
+---
+
+## 📋 Table of Contents
+
+- [Project Overview](#-project-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Quick Start](#-quick-start)
+- [API Documentation](#-api-documentation)
+- [Component Architecture](#-component-architecture)
+- [Troubleshooting](#-troubleshooting)
+
+---
 
 ## 🎯 Project Overview
 
-This is a complete Retail Sales Management System built with modern web technologies. It allows users to search, filter, sort, and analyze sales transactions with a clean, intuitive user interface.
+**TruEstate Sales Management System** is a modern, full-stack web application designed to help businesses efficiently manage and analyze their retail sales data. Built with Node.js, React, and TypeScript, it provides powerful search, filtering, sorting, and analytics capabilities through an intuitive and responsive user interface.
 
-### Tech Stack
+### Key Highlights
+- 📊 **Real-time Analytics**: Live statistics cards (Total Units, Revenue, Discounts)
+- 🔍 **Advanced Search**: Full-text search across customer names, phones, product IDs
+- 🎛️ **Smart Filtering**: Multi-parameter filtering with intelligent query building
+- 📈 **Sorting**: Sortable columns (Customer Name, Date, Quantity, Amount)
+- 📄 **Pagination**: Efficient data loading with configurable page sizes
+- 🎨 **Responsive UI**: Desktop, tablet, and mobile-friendly design
+- 🔐 **Type-Safe**: Built entirely with TypeScript for reliability
 
-**Backend:**
-- Node.js + Express.js
-- TypeScript for type safety
-- RESTful API design
-- JSON-based data storage
-- CORS enabled
+---
 
-**Frontend:**
-- React 18 with Hooks
-- TypeScript for type safety
-- Axios for HTTP requests
-- CSS for styling (no heavy frameworks)
-- Responsive design
+## ✨ Features - Detailed
 
-## 📁 Project Structure
+### Backend Features
+- ✅ Full-text search on customer names, phone numbers, product IDs
+- ✅ Multi-region filtering with OR logic
+- ✅ Age range filtering with preset bands (18-25, 26-35, 36-50, 50+)
+- ✅ Product category filtering
+- ✅ Payment method filtering
+- ✅ Date range filtering
+- ✅ Sortable by: date, quantity, customerName, totalAmount
+- ✅ Pagination with configurable items per page
+- ✅ Real-time stat aggregation (total units, revenue, discount)
 
-```
-TruEstate/
-├── backend/                 # Express API server
-│   ├── src/
-│   │   ├── index.ts        # Express app entry point
-│   │   ├── controllers/    # Request handlers
-│   │   ├── routes/         # API routes
-│   │   ├── services/       # Business logic
-│   │   ├── utils/          # Helper functions
-│   │   ├── types/          # TypeScript interfaces
-│   │   └── scripts/        # Utility scripts
-│   ├── data/
-│   │   └── sales.json      # Sample data
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── README.md
-│
-└── frontend/                # React application
-    ├── public/
-    │   └── index.html      # HTML entry point
-    ├── src/
-    │   ├── App.tsx         # Main component
-    │   ├── index.tsx       # React entry point
-    │   ├── components/     # UI components
-    │   ├── hooks/          # Custom hooks
-    │   ├── services/       # API client
-    │   └── styles/         # CSS files
-    ├── package.json
-    └── README.md
-```
+### Frontend Features
+- ✅ Left sidebar navigation with collapsible menus (Services, Invoices)
+- ✅ Horizontal filter navbar with all search options
+- ✅ Summary stats cards showing key metrics
+- ✅ Sortable data table with 13+ columns
+- ✅ Clickable menu items with selection state
+- ✅ Smooth pagination and auto-scroll
+- ✅ Loading states and error handling
+- ✅ Responsive design (desktop, tablet, mobile)
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- **Node.js** v14+ - Runtime environment
+- **Express.js** 4.x - Web framework
+- **TypeScript** 4.x - Type safety
+- **MongoDB** 5.0+ - Database (optional)
+- **Mongoose** 7.x - ODM for MongoDB
+- **CORS** - Cross-origin resource sharing
+
+### Frontend
+- **React** 18.x - UI library with Hooks
+- **TypeScript** 4.x - Type safety
+- **Tailwind CSS** 3.x - Utility-first CSS
+- **Axios** 1.x - HTTP client
+- **React Icons** 4.x - Icon library
+
+### Development Tools
+- **npm** - Package manager
+- **Git** - Version control
+- **Create React App** - Frontend scaffold
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js v14+
-- npm or yarn
-- Git
+- Node.js v14 or higher
+- npm v6 or higher
+- Git latest version
 
-### Backend Setup
+### Installation
+
+#### 1. Clone Repository
+```bash
+git clone https://github.com/Rohansaini1512/TruEstate-Sale-Management.git
+cd TruEstate
+```
+
+#### 2. Backend Setup
 
 ```bash
-# Navigate to backend
 cd backend
 
 # Install dependencies
 npm install
 
-# Load sample data
+# Load sample data (optional)
 npm run load-data
 
 # Start development server
 npm run dev
 ```
 
-Server runs on `http://localhost:5000`
+**Backend runs on**: `http://localhost:5000`
 
-### Frontend Setup
+#### 3. Frontend Setup (in new terminal)
 
 ```bash
-# Navigate to frontend (in a new terminal)
 cd frontend
 
 # Install dependencies
@@ -93,276 +128,356 @@ npm install
 npm start
 ```
 
-Application opens at `http://localhost:3000`
+**Frontend runs on**: `http://localhost:3000`
 
-## 📊 Features
+#### 4. Verify Installation
 
-### Backend API
+Visit `http://localhost:3000` - you should see the complete sales dashboard with:
+- Left sidebar navigation
+- Filter panel above the table
+- Statistics cards
+- Sales data table with pagination
 
-✅ **Search Functionality**
-- Full-text search on customer names
-- Phone number search support
-- Case-insensitive matching
+---
 
-✅ **Advanced Filtering**
-- Multi-select customer regions
-- Gender filtering
-- Age range filtering
-- Product category filtering
-- Tag-based filtering (ANY match logic)
-- Payment method filtering
-- Date range filtering
+## 📊 API Documentation
 
-✅ **Sorting Options**
-- Sort by date (newest first)
-- Sort by quantity
-- Sort by customer name (A-Z)
-- Configurable sort order (ASC/DESC)
-
-✅ **Pagination**
-- 10 items per page (configurable)
-- Page parameter for navigation
-- Total count metadata
-- Page information in response
-
-✅ **Edge Case Handling**
-- No results handling
-- Invalid range validation
-- Conflicting filter resolution
-- Missing field handling
-
-### Frontend UI
-
-✨ **Modern Interface**
-- Clean, professional design
-- Responsive layout (desktop, tablet, mobile)
-- Intuitive filter panel with collapsible sections
-- Real-time data loading indicators
-
-🔍 **Search & Filter**
-- Instant filter application
-- Active filter counter
-- Clear all filters option
-- Filter state persistence
-
-📋 **Data Display**
-- Comprehensive transactions table
-- Color-coded status badges
-- Formatted currency and dates
-- Transaction counting
-
-🎯 **Navigation**
-- Smooth pagination
-- Quick page selection
-- Auto-scroll to results
-- Previous/Next buttons
-
-## 🔗 API Endpoints
-
-### Main Endpoints
-
-**Get Sales Records**
+### Base URL
 ```
-GET /api/sales
-?search=john
-&customerRegions=North America
-&gender=Male
-&ageMin=25&ageMax=45
-&productCategories=Electronics
-&tags=laptop
-&paymentMethods=Credit Card
-&dateFrom=2024-12-01&dateTo=2024-12-31
-&sortBy=date&sortOrder=desc
-&page=1&limit=10
+http://localhost:5000/api
 ```
 
-**Get Filter Options**
-```
-GET /api/sales/filters
-```
+### Endpoints
 
-**Health Check**
+#### 1. Get Sales Records
 ```
-GET /health
+GET /sales?search=john&page=1&limit=10&sortBy=customerName&sortOrder=asc
 ```
 
-## 📝 Sample Data
+**Query Parameters**:
+| Parameter | Type | Example | Description |
+|-----------|------|---------|-------------|
+| `search` | string | "john" | Search query |
+| `customerRegions` | string[] | "North" | Filter by region |
+| `gender` | string | "Male" | Filter by gender |
+| `ageMin` | number | 25 | Minimum age |
+| `ageMax` | number | 45 | Maximum age |
+| `productCategories` | string[] | "Electronics" | Filter by category |
+| `paymentMethods` | string[] | "Credit Card" | Filter by payment |
+| `dateFrom` | string | "2024-12-01" | Start date |
+| `dateTo` | string | "2024-12-31" | End date |
+| `sortBy` | string | "date" | Sort field |
+| `sortOrder` | string | "asc" | Sort order |
+| `page` | number | 1 | Page number |
+| `limit` | number | 10 | Items per page |
 
-The project includes 8 sample sales records covering:
-- Various customers across different regions (North America, Europe, Asia, South America)
-- Multiple products in Electronics and Accessories categories
-- Different payment methods (Credit Card, PayPal, Bank Transfer, Debit Card)
-- Various order statuses (Delivered, Processing, Shipped)
-- Range of quantities and prices
-
-Data is stored in `backend/data/sales.json` and can be loaded via:
-```bash
-npm run load-data
+**Response** (200 OK):
+```json
+{
+  "success": true,
+  "data": {
+    "items": [...],
+    "totalItems": 150,
+    "totalPages": 15,
+    "currentPage": 1,
+    "limit": 10
+  }
+}
 ```
 
-## 🎨 UI Design Specifications
-
-### Color Palette
-- Primary: #3b82f6 (Blue)
-- Success: #10b981 (Green)
-- Error: #ef4444 (Red)
-- Background: #f8fafc (Light Gray)
-- Text: #1e293b (Dark)
-
-### Responsive Breakpoints
-- Desktop: 1200px+
-- Tablet: 768px - 1199px
-- Mobile: Below 768px
-
-### Components
-- Header with statistics
-- Filter sidebar (collapsible)
-- Data table with sorting
-- Pagination controls
-- Loading and error states
-
-## 🔄 Data Flow
-
+#### 2. Get Filter Options
 ```
-User Input
-    ↓
-React State Update
-    ↓
-API Request (with query params)
-    ↓
-Express Backend Processing
-    ↓
-Filter → Sort → Paginate
-    ↓
-JSON Response with metadata
-    ↓
-Frontend State Update
-    ↓
-UI Re-render
+GET /sales/filters
 ```
 
-## 🛠️ Development Workflow
-
-### Making Changes to Filters
-
-1. **Backend**: Update `src/services/queryService.ts`
-2. **Frontend**: Update `SalesFilters.tsx` component
-3. **Types**: Ensure types match in `src/types/index.ts`
-
-### Adding New Endpoints
-
-1. Create handler in `controllers/`
-2. Add route in `routes/`
-3. Update frontend API client in `services/salesAPI.ts`
-
-### Styling Changes
-
-- Global styles: `frontend/src/styles/global.css`
-- Component styles: Individual CSS files
-- Colors: Update CSS variables in `:root`
-
-## 📚 Documentation
-
-- [Backend README](./backend/README.md) - API details and implementation
-- [Frontend README](./frontend/README.md) - UI/UX guide and components
-
-## 🧪 Testing the System
-
-### Backend Testing
-
-```bash
-cd backend
-
-# Test data loading
-npm run load-data
-
-# Test API
-curl http://localhost:5000/api/sales
-
-# Test with filters
-curl "http://localhost:5000/api/sales?search=john&page=1"
+**Response** (200 OK):
+```json
+{
+  "success": true,
+  "data": {
+    "customerRegions": ["North", "South", "East", "West", "Central"],
+    "genders": ["Male", "Female", "Other"],
+    "productCategories": ["Clothing", "Electronics", "Grocery"],
+    "paymentMethods": ["Credit Card", "Debit Card", "Cash", "PayPal"],
+    "ageRange": { "min": 18, "max": 75 },
+    "dateRange": { "min": "2024-01-01", "max": "2024-12-31" }
+  }
+}
 ```
 
-### Frontend Testing
+---
 
-1. Open `http://localhost:3000` in browser
-2. Verify filters load and are clickable
-3. Test search functionality
-4. Verify pagination works
-5. Check responsive design (use DevTools)
+## 🎨 Component Architecture
+
+### Component Hierarchy
+
+```
+App (Main Container)
+├── Sidebar (Left Navigation)
+│   ├── Dashboard Button
+│   ├── Nexus Button
+│   ├── Intake Button
+│   ├── Services (Dropdown)
+│   │   ├── Pre-active
+│   │   ├── Active
+│   │   ├── Blocked
+│   │   └── Closed
+│   └── Invoices (Dropdown)
+│       ├── Proforma Invoices
+│       └── Final Invoices
+├── Header (with Total Records)
+├── SalesFilters (Navbar)
+│   ├── Search Input
+│   ├── Region Dropdown
+│   ├── Gender Dropdown
+│   ├── Age Range Dropdown
+│   ├── Category Dropdown
+│   ├── Payment Method Dropdown
+│   ├── Date Range Inputs
+│   ├── Apply Button
+│   └── Reset Button
+├── StatsHeader (Statistics Cards)
+│   ├── Total Units Card
+│   ├── Total Amount Card
+│   └── Total Discount Card
+└── SalesTable (Data Display)
+    ├── Sortable Headers
+    ├── Table Rows
+    └── Pagination Controls
+```
+
+### Key Components
+
+| Component | Path | Purpose |
+|-----------|------|---------|
+| App | `src/App.tsx` | Main container & state management |
+| Sidebar | `src/components/Sidebar.tsx` | Navigation menu with dropdowns |
+| SalesFilters | `src/components/SalesFilters.tsx` | Filter controls |
+| SalesTable | `src/components/SalesTable.tsx` | Data display & pagination |
+| StatsHeader | `src/components/StatsHeader.tsx` | Summary statistics |
+| useSalesData | `src/hooks/useSalesData.ts` | Data fetching hook |
+| salesAPI | `src/services/salesAPI.ts` | API client |
+
+---
+
+## 🗄️ Database Schema
+
+### Sale Record Structure
+```typescript
+interface Sale {
+  transactionId?: string;     // Transaction ID
+  customerId: string;         // Customer ID
+  customerName: string;       // Full name
+  phoneNumber: string;        // Contact number
+  gender: string;             // Male, Female, Other
+  age: number;                // Customer age
+  customerRegion: string;     // Geographic region
+  customerType: string;       // Premium, Regular, etc.
+  
+  productId: string;          // Product ID
+  productName: string;        // Product name
+  brand: string;              // Brand name
+  productCategory: string;    // Category
+  tags: string[];             // Tags array
+  
+  quantity: number;           // Quantity purchased
+  pricePerUnit: number;       // Unit price
+  discountPercentage: number; // Discount %
+  totalAmount: number;        // Total before discount
+  finalAmount: number;        // Total after discount
+  
+  date: string;               // ISO 8601 timestamp
+  paymentMethod: string;      // Payment type
+  orderStatus: string;        // Order status
+  deliveryType: string;       // Delivery method
+  
+  storeId: string;            // Store ID
+  storeLocation: string;      // Store location
+  salespersonId: string;      // Salesperson ID
+  employeeName: string;       // Employee name
+}
+```
+
+---
 
 ## 🚀 Deployment
 
 ### Backend Deployment
 
-1. Build: `npm run build`
-2. Copy `dist/` folder to server
-3. Set environment variables
-4. Run: `node dist/index.js`
+**Build**:
+```bash
+npm run build
+```
+
+**Environment (.env)**:
+```env
+NODE_ENV=production
+PORT=5000
+MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/db
+CORS_ORIGIN=https://yourdomain.com
+```
+
+**Run**:
+```bash
+npm start
+```
 
 ### Frontend Deployment
 
-1. Build: `npm run build`
-2. Serve `build/` folder as static files
-3. Configure environment for production API URL
+**Build**:
+```bash
+npm run build
+```
 
-## 📋 Checklist
+**Deploy to**:
+- Vercel: `vercel deploy`
+- Netlify: Drag & drop `build/` folder
+- GitHub Pages: `npm run deploy`
+- Traditional server: Copy `build/` to web root
 
-- [x] Backend API with filtering, sorting, pagination
-- [x] Frontend React app with hooks and state management
-- [x] Type-safe implementation with TypeScript
-- [x] Responsive UI matching Figma design
-- [x] Sample data and data loading script
-- [x] Comprehensive documentation
-- [x] Error handling and edge cases
-- [x] Clean, modular code architecture
+---
 
 ## 🐛 Troubleshooting
 
-### Backend won't start
-```bash
-# Check port 5000 is available
-lsof -i :5000
+### Backend Issues
 
-# Clear node_modules and reinstall
+**Port 5000 already in use**:
+```bash
+lsof -i :5000
+kill -9 <PID>
+```
+
+**Cannot find module**:
+```bash
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-### Frontend can't connect to API
+**Database connection error**:
 ```bash
-# Verify backend is running
-curl http://localhost:5000/health
-
-# Check .env file has correct API URL
-cat frontend/.env
+# Verify MongoDB URI in .env
+cat .env
 ```
 
-### Data not loading
-```bash
-# Verify data file exists
-ls -la backend/data/sales.json
+### Frontend Issues
 
-# Reload sample data
-npm run load-data
+**Blank page**:
+1. Check browser console (F12) for errors
+2. Verify backend is running: `curl http://localhost:5000/health`
+3. Check network tab for failed requests
+
+**API not loading**:
+```bash
+# Verify API URL
+echo $REACT_APP_API_URL
+# Restart frontend
+npm start
 ```
 
-## 📞 Support
-
-For issues or questions:
-1. Check the relevant README file
-2. Review error messages in console
-3. Check network tab in DevTools for API responses
-4. Verify all dependencies are installed
-
-## 📄 License
-
-ISC
-
-## 👨‍💻 Contributors
-
-Built as a comprehensive retail sales management solution for a coding assignment.
+**Build errors**:
+```bash
+npm cache clean --force
+rm -rf node_modules package-lock.json
+npm install
+npm run build
+```
 
 ---
 
-**Happy coding! 🎉**
+## 📚 Additional Resources
+
+- [Architecture Documentation](./docs/architecture.md) - Detailed system design
+- [Backend README](./backend/README.md) - API implementation
+- [Frontend README](./frontend/README.md) - UI/UX guide
+- [Express.js Guide](https://expressjs.com/)
+- [React Documentation](https://react.dev/)
+- [Tailwind CSS](https://tailwindcss.com/docs)
+
+---
+
+## 📝 Project Structure
+
+```
+TruEstate/
+├── backend/                    # Express API server
+│   ├── src/
+│   │   ├── index.ts           # Server entry
+│   │   ├── config/            # Configuration
+│   │   ├── controllers/       # Request handlers
+│   │   ├── routes/            # API routes
+│   │   ├── services/          # Business logic
+│   │   ├── utils/             # Utilities
+│   │   ├── types/             # TypeScript types
+│   │   └── scripts/           # Utility scripts
+│   ├── data/sales.json        # Sample data
+│   └── package.json
+│
+├── frontend/                   # React application
+│   ├── src/
+│   │   ├── components/        # UI components
+│   │   ├── hooks/             # Custom hooks
+│   │   ├── services/          # API client
+│   │   ├── styles/            # CSS files
+│   │   ├── App.tsx            # Main component
+│   │   └── index.tsx          # Entry point
+│   └── package.json
+│
+├── docs/
+│   └── architecture.md        # Architecture docs
+│
+└── README.md                  # This file
+```
+
+---
+
+## ✅ Completed Features
+
+- [x] Backend API with filtering, sorting, pagination
+- [x] Frontend React app with hooks and state management
+- [x] Type-safe implementation with TypeScript
+- [x] Responsive UI with Tailwind CSS
+- [x] Sample data and data loading script
+- [x] Left sidebar navigation with dropdowns
+- [x] Filter navbar with search and filters
+- [x] Statistics cards with real-time data
+- [x] Sortable data table
+- [x] Clickable menu items
+- [x] Comprehensive documentation
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/AmazingFeature`
+3. Commit changes: `git commit -m 'Add AmazingFeature'`
+4. Push to branch: `git push origin feature/AmazingFeature`
+5. Open Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the ISC License.
+
+---
+
+## 👨‍💻 Author
+
+**Rohan Saini**
+- GitHub: [@Rohansaini1512](https://github.com/Rohansaini1512)
+- Repository: [TruEstate-Sale-Management](https://github.com/Rohansaini1512/TruEstate-Sale-Management)
+
+---
+
+## 📞 Support
+
+For support, open an issue in the [GitHub repository](https://github.com/Rohansaini1512/TruEstate-Sale-Management/issues).
+
+---
+
+**Last Updated**: December 9, 2025  
+**Version**: 1.0.0  
+**Status**: ✅ Production Ready
+
+```
