@@ -3,9 +3,7 @@ import * as path from 'path';
 import { setSalesData, saveSalesData } from '../utils/dataStore';
 import { SalesRecord } from '../types';
 
-/**
- * Sample sales data for demonstration
- */
+
 const SAMPLE_DATA: SalesRecord[] = [
   {
     // Customer
@@ -253,9 +251,7 @@ const SAMPLE_DATA: SalesRecord[] = [
   },
 ];
 
-/**
- * Load sample data into the system
- */
+
 function loadSampleData(): void {
   console.log('📦 Loading sample sales data...');
   setSalesData(SAMPLE_DATA);
@@ -263,9 +259,7 @@ function loadSampleData(): void {
   console.log(`✅ Successfully loaded ${SAMPLE_DATA.length} sample records`);
 }
 
-/**
- * Load data from CSV file if it exists
- */
+
 function loadCSVData(filePath: string): void {
   try {
     if (!fs.existsSync(filePath)) {
@@ -274,8 +268,6 @@ function loadCSVData(filePath: string): void {
     }
 
     const content = fs.readFileSync(filePath, 'utf-8');
-    // CSV parsing logic would go here
-    // For now, we'll use the sample data
     console.warn('⚠️  CSV loading not implemented. Using sample data instead.');
   } catch (error) {
     console.error('Error loading CSV data:', error);

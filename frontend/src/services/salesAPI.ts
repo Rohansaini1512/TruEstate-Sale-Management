@@ -70,9 +70,7 @@ export interface FilterOptions {
 }
 
 class SalesAPI {
-  /**
-   * Fetch sales records with filters, sorting, and pagination
-   */
+  
   async fetchSalesRecords(
     params: SalesQueryParams
   ): Promise<PaginatedResponse<SalesRecord>> {
@@ -109,10 +107,7 @@ class SalesAPI {
 
     const response = await axios.get(`${API_BASE_URL}/sales`, { params: queryParams });
 
-    // Defensive mapping: backend is expected to return camelCase fields, but
-    // accept several variants (snake_case, spaced headers) and normalize to our
-    // frontend `Sale` shape. This ensures the UI won't break if keys differ.
-    // Cast to any so we can tolerate alternate response property names (e.g. totalItemsCount).
+    
     const raw = response.data.data as any;
     const mapItem = (item: any): Sale => {
       return {

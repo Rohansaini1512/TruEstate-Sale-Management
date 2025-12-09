@@ -12,10 +12,7 @@ interface CSVRow {
   [key: string]: any;
 }
 
-/**
- * Map CSV column names to database field names
- * Customize this mapping based on your CSV structure
- */
+
 function mapCSVRowToSalesRecord(row: CSVRow): any {
   // Helper to map gender values
   const mapGender = (value: string): string => {

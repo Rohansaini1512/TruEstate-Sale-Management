@@ -311,9 +311,7 @@ export function querySalesRecords(
   };
 }
 
-/**
- * Get available filter options (distinct values)
- */
+
 export function getFilterOptions() {
   const records = getAllSalesData();
 

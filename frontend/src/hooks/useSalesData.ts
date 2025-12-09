@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import salesAPI, { SalesQueryParams, PaginatedResponse, FilterOptions, Sale } from '../services/salesAPI';
 
-// Re-export the Sale type from the API module so other components can import
-// `Sale` from this hook file as requested.
+
 export type { Sale } from '../services/salesAPI';
 
 export function useSalesData(initialParams?: SalesQueryParams) {

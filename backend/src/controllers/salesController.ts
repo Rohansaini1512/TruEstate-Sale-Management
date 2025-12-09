@@ -2,9 +2,7 @@ import { Request, Response } from 'express';
 import { salesService } from '../services/salesService';
 import { QueryFilters, QueryOptions } from '../types';
 
-/**
- * Parse query parameters into typed filters and options
- */
+
 function parseQueryParams(query: any): { filters: QueryFilters; options: QueryOptions } {
   const filters: QueryFilters = {};
   const options: QueryOptions = {
@@ -96,10 +94,7 @@ function parseQueryParams(query: any): { filters: QueryFilters; options: QueryOp
   return { filters, options };
 }
 
-/**
- * GET /api/sales
- * Retrieve sales records with filtering, sorting, and pagination
- */
+
 export async function getSalesRecords(req: Request, res: Response): Promise<void> {
   try {
     const { filters, options } = parseQueryParams(req.query);
@@ -121,10 +116,7 @@ export async function getSalesRecords(req: Request, res: Response): Promise<void
   }
 }
 
-/**
- * GET /api/sales/filters
- * Get available filter options
- */
+
 export async function getFilterOptionsHandler(req: Request, res: Response): Promise<void> {
   try {
     const options = await salesService.getFilterOptions();

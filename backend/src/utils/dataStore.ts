@@ -2,9 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { SalesRecord } from '../types';
 
-/**
- * In-memory data store for sales records
- */
+
 let salesData: SalesRecord[] = [];
 
 /**

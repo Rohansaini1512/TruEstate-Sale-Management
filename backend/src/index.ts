@@ -67,7 +67,7 @@ const startServer = async () => {
       }
     );
 
-    // Start server
+  
     app.listen(PORT, () => {
       console.log(`\n🚀 Retail Sales API Server running at http://localhost:${PORT}`);
       console.log(`📊 Health Check: http://localhost:${PORT}/health`);

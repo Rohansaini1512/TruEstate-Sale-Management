@@ -2,9 +2,6 @@ import { SalesRecordModel, ISalesRecord } from '../models/SalesRecord';
 import { SalesRecord } from '../types';
 
 export class SalesService {
-  /**
-   * Get all sales records with pagination and filtering
-   */
   async getAllSales(params: {
     page?: number;
     limit?: number;
