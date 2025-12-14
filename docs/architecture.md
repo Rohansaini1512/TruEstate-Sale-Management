@@ -19,10 +19,10 @@
 **TruEstate Sales Management System** is a full-stack web application designed to manage and analyze retail sales data with advanced filtering, searching, and analytics capabilities.
 
 ### Core Technologies
-- **Backend**: Node.js, Express.js, TypeScript, MongoDB/JSON
+- **Backend**: Node.js, Express.js, TypeScript, In-Memory JSON Store
 - **Frontend**: React 18, TypeScript, Tailwind CSS, Axios
 - **Architecture Pattern**: Client-Server (REST API)
-- **Data Storage**: MongoDB with Mongoose ODM
+- **Data Storage**: In-Memory JSON file-based storage
 - **Styling**: Tailwind CSS + Custom CSS
 
 ---

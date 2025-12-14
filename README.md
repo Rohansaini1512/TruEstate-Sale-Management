@@ -66,8 +66,7 @@
 - **Node.js** v14+ - Runtime environment
 - **Express.js** 4.x - Web framework
 - **TypeScript** 4.x - Type safety
-- **MongoDB** 5.0+ - Database (optional)
-- **Mongoose** 7.x - ODM for MongoDB
+- **In-Memory Data Store** - JSON file-based storage
 - **CORS** - Cross-origin resource sharing
 
 ### Frontend
@@ -313,7 +312,6 @@ npm run build
 ```env
 NODE_ENV=production
 PORT=5000
-MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/db
 CORS_ORIGIN=https://yourdomain.com
 ```
 
