@@ -1,16 +1,16 @@
-// In-memory database - no external database connection required
+const mongoose = require("mongoose");
 
-export const connectDB = async (): Promise<void> => {
-  console.log('✓ Using in-memory data store');
-  console.log('  No external database connection required');
-};
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 5000, // 5 second timeout
+      socketTimeoutMS: 45000,
+    });
+    console.log("MongoDB Atlas Connected");
+  } catch (err) {
+    console.error("MongoDB Connection Failed:", err.message);
+    throw err;
+  }
+}
 
-export const disconnectDB = async (): Promise<void> => {
-  console.log('In-memory data store - no cleanup needed');
-};
-
-// Graceful shutdown
-process.on('SIGINT', async () => {
-  await disconnectDB();
-  process.exit(0);
-});
+module.exports = connectDB;

@@ -30,7 +30,7 @@ const SalesSchema = new mongoose.Schema({
   salespersonId: String,
   employeeName: String,
 }, {
-  collection: 'sales_records'  
+  collection: 'sales_records'  // ⭐ THIS IS THE KEY CHANGE - matches MongoDB collection
 });
 
 // Add indexes for better query performance

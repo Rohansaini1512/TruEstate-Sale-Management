@@ -39,5 +39,3 @@ export function useSales() {
 }
 
 
-cd backend
-npm run dev
