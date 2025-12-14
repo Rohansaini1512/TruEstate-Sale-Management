@@ -1,6 +1,7 @@
+.gitignore: keep compiled build artifacts out of repo
 node_modules/
 dist/
-*.js
+dist/**/*.js
 *.js.map
 *.d.ts
 .DS_Store
