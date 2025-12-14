@@ -69,7 +69,7 @@ Live Demo: http://13.60.213.199/
 - **Node.js** v14+ - Runtime environment
 - **Express.js** 4.x - Web framework
 - **TypeScript** 4.x - Type safety
-- **In-Memory Data Store** - JSON file-based storage
+- **MongoDB (Mongoose)** - Persistent data storage (configure via `MONGODB_URI` in `.env`)
 - **CORS** - Cross-origin resource sharing
 
 ### Frontend

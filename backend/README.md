@@ -27,7 +27,16 @@ A robust Express.js REST API for managing retail sales data with advanced filter
 
 This application is deployed and accessible at: http://13.60.213.199/
 
-Note: The backend uses an in-memory / JSON-file based datastore for sample/demo purposes. For production, consider connecting a persistent database.
+Note: The backend uses MongoDB via Mongoose for persistent storage. Configure your connection string using the `MONGODB_URI` (or `MONGO_URI`) environment variable.
+
+Example `.env` (do NOT commit secrets):
+```
+# Local MongoDB
+MONGODB_URI=mongodb://localhost:27017/truestate-sales
+
+# Or MongoDB Atlas
+# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/truestate-sales?retryWrites=true&w=majority
+```
 
 ## Project Structure
 
