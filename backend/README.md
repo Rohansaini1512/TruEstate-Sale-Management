@@ -23,6 +23,12 @@ A robust Express.js REST API for managing retail sales data with advanced filter
 - Sample data loading script
 - Filter options endpoint for dynamic UI
 
+## Live Demo
+
+This application is deployed and accessible at: http://13.60.213.199/
+
+Note: The backend uses an in-memory / JSON-file based datastore for sample/demo purposes. For production, consider connecting a persistent database.
+
 ## Project Structure
 
 ```

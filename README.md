@@ -6,6 +6,9 @@
 ![Node Version](https://img.shields.io/badge/node-%3E%3D14-brightgreen.svg)
 ![React Version](https://img.shields.io/badge/react-18-blue.svg)
 
+Live Demo: http://13.60.213.199/  
+
+
 ---
 
 ## 📋 Table of Contents
